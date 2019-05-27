@@ -28,4 +28,4 @@ Open `System Preferences` and navigate to `Keyboard - Shortcuts - Services - Gen
 
 ### Accessibility settings
 
-For any applications you wish to use the autoclicker in you must add them to the list in `Security & Privacy - Privacy - Accessibility`. For example, if you want to use the autoclicker in `Minecraft`, you have to add the `Minecraft` app to the list. If you don't do this beforehand you should be prompted to do so.
+For any applications you wish to use the autoclicker in you must add them to the list in `Security & Privacy - Privacy - Accessibility`. For example, if you want to use the autoclicker in `Minecraft`, you have to add the `Minecraft` app to the list. If you don't do this beforehand you should be prompted to do so when you try to activate the autoclicker. Note that if you do so, you may have to activate it twice the next time in order for it to take effect, as the loop may have already started running.
