@@ -10,12 +10,12 @@ brew install cliclick
 
 ### Clone the repository
 
-The repository should be located on the root of your hard drive.
+The repository should be located in your home directory.
 
 ```bash
-cd /
+cd ~
 git clone https://github.com/reyniraron/autoclick.git
-open /autoclick
+open ~/autoclick
 ```
 
 ### Install workflow

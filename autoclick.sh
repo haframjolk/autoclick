@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Check if script is running
 if [ "$(pgrep -f 'clickloop.sh')" != '' ]
@@ -7,5 +7,5 @@ then
     pkill -9 -f 'clickloop.sh'
 else
     # Else run the script
-    /bin/bash /autoclick/clickloop.sh
+    /bin/zsh "$HOME/autoclick/clickloop.sh"
 fi
