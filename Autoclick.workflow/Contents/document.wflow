@@ -94,8 +94,6 @@
 					set clickCoordinates to defaultClickPoint
 				end if
 				
-				set defaultIntervalLength to ".2"
-				
 				set userIntervalLength to display dialog "What interval length do you want for autoclick?" default answer defaultIntervalLength
 				set intervalLength to text returned of userIntervalLength
 				
