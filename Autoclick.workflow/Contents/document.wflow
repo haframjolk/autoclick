@@ -51,7 +51,85 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>on run	try		set isDebug to false				set isInputDriven to true				set autoclickScript to "$HOME/autoclick/clickloop.sh"		set autoclickKillScript to "$HOME/autoclick/kill_autoclick.sh"				set killScriptResult to do shell script autoclickKillScript		set wasActive to killScriptResult is not equal to "clickloop.sh process not found"				if isDebug then			display dialog "wasActive: " &amp; wasActive		end if				if not wasActive then			set nullClickPoint to "0,0"			set midClickPoint to "1000,500"			set defaultClickPoint to midClickPoint						set fastClickInterval to ".2"			set midClickInterval to "1"			set slowClickInterval to "10"			set defaultIntervalLength to fastClickInterval						if isInputDriven then				set userClickCoordinates to display dialog "What click coordinates do you want for autoclick?" default answer defaultClickPoint				set clickCoordinates to text returned of userClickCoordinates								set coordinatesRegexScript to "perl -e \"print ((\"" &amp; clickCoordinates &amp; "\" =~ /(\\d{1,4},\\d{1,4})/)[0])\"" as string				set regexResult to do shell script coordinatesRegexScript				set isValidCoordinates to regexResult is equal to userClickCoordinates								if isValidCoordinates is not true then					set clickCoordinates to defaultClickPoint				end if								set defaultIntervalLength to ".2"								set userIntervalLength to display dialog "What interval length do you want for autoclick?" default answer defaultIntervalLength				set intervalLength to text returned of userIntervalLength								set validateIntervalRegexScript to "perl -e \"print ((\"" &amp; intervalLength &amp; "\" =~ /((\\d+)?\\.\\d+)/))\"" as string				set intervalRegexResult to do shell script validateIntervalRegexScript				set isValidInterval to intervalRegexResult is equal to intervalLength							else				set clickCoordinates to defaultClickPoint				set intervalLength to defaultIntervalLength			end if						if isDebug then				display dialog "clickCoordinates: " &amp; clickCoordinates &amp; " | intervalLength: " &amp; intervalLength			end if						set devNullDetachedMode to " &amp;&gt; /dev/null &amp;"			set clickloopScript to "$HOME/autoclick/clickloop.sh \"" &amp; clickCoordinates &amp; "\" \"" &amp; intervalLength &amp; "\"" &amp; devNullDetachedMode						if isDebug then				display dialog "clickloopScript: " &amp; clickloopScript			end if						set scriptResult to do shell script clickloopScript		end if	on error		return	end try		returnend run</string>
+					<string>on run
+	try
+		set isDebug to false
+		
+		set isInputDriven to true
+		
+		set autoclickScript to "$HOME/autoclick/clickloop.sh"
+		set autoclickKillScript to "$HOME/autoclick/kill_autoclick.sh"
+		
+		set killScriptResult to do shell script autoclickKillScript
+		set wasActive to killScriptResult is not equal to "clickloop.sh process not found"
+		
+		if isDebug then
+			display dialog "wasActive: " &amp; wasActive
+		end if
+		
+		if not wasActive then
+			set nullClickPoint to "0,0"
+			set midClickPoint to "1000,500"
+			set defaultClickPoint to midClickPoint
+			
+			set fastClickInterval to ".2"
+			set midClickInterval to "1"
+			set slowClickInterval to "10"
+			set defaultIntervalLength to fastClickInterval
+			
+			if isInputDriven then
+				set isValidCoordinates to false
+				set isValidInterval to false
+				
+				set userClickCoordinates to display dialog "What click coordinates do you want for autoclick?" default answer defaultClickPoint
+				set clickCoordinates to text returned of userClickCoordinates
+				
+				if clickCoordinates is not equal to "" then
+					set coordinatesRegexScript to "perl -e \"print ((\"" &amp; clickCoordinates &amp; "\" =~ /(\\d{1,4},\\d{1,4})/)[0])\"" as string
+					set regexResult to do shell script coordinatesRegexScript
+					set isValidCoordinates to regexResult is not equal to "" and regexResult is equal to userClickCoordinates
+				end if
+				
+				if isValidCoordinates is not true then
+					set clickCoordinates to defaultClickPoint
+				end if
+				
+				set userIntervalLength to display dialog "What interval length do you want for autoclick?" default answer defaultIntervalLength
+				set intervalLength to text returned of userIntervalLength
+				
+				if intervalLength is not equal to "" then
+					set validateIntervalRegexScript to "perl -e \"print ((\"" &amp; intervalLength &amp; "\" =~ /((\\d+)?\\.\\d+)/)[0])\"" as string
+					set intervalRegexResult to do shell script validateIntervalRegexScript
+					set isValidInterval to intervalRegexResult is equal to intervalLength
+				end if
+				
+				if isValidInterval is not true then
+					set intervalLength to defaultIntervalLength
+				end if
+			else
+				set clickCoordinates to defaultClickPoint
+				set intervalLength to defaultIntervalLength
+			end if
+			
+			if isDebug then
+				display dialog "clickCoordinates: " &amp; clickCoordinates &amp; " | intervalLength: " &amp; intervalLength
+			end if
+			
+			set devNullDetachedMode to " &amp;&gt; /dev/null &amp;"
+			set clickloopScript to autoclickScript &amp; " \"" &amp; clickCoordinates &amp; "\" \"" &amp; intervalLength &amp; "\"" &amp; devNullDetachedMode
+			
+			if isDebug then
+				display dialog "clickloopScript: " &amp; clickloopScript
+			end if
+			
+			set scriptResult to do shell script clickloopScript
+		end if
+	on error
+		return
+	end try
+	
+	return
+end run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
