@@ -14,7 +14,7 @@ The repository should be located in your home directory.
 
 ```bash
 cd ~
-git clone https://github.com/reyniraron/autoclick.git
+git clone https://github.com/haframjolk/autoclick.git
 open ~/autoclick
 ```
 
